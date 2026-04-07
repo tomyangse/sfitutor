@@ -1,0 +1,152 @@
+{
+  "meta": {
+    "title": "SFI Tutor - AI 瑞典语导师",
+    "description": "用 AI 导师帮你从 SFI 考到高中水平"
+  },
+  "nav": {
+    "home": "首页",
+    "dashboard": "学习面板",
+    "materials": "学习资料",
+    "flashcards": "闪卡",
+    "practice": "练习",
+    "settings": "设置",
+    "login": "登录",
+    "signup": "免费开始",
+    "logout": "退出"
+  },
+  "landing": {
+    "badge": "AI 驱动的瑞典语学习",
+    "title": "AI 助你",
+    "titleHighlight": "掌握瑞典语",
+    "subtitle": "从 SFI C/D 到高中水平 — 你的 AI 导师为你定制学习计划、自动教学、根据进度调整。上传你的学习资料，让 AI 引导你的学习之旅。",
+    "cta": "免费开始学习",
+    "ctaSecondary": "了解更多",
+    "stats": {
+      "levels": "6 个等级",
+      "levelsDesc": "SFI C 到 SAS 3",
+      "skills": "4 项技能",
+      "skillsDesc": "读、写、听、说",
+      "ai": "AI 导师",
+      "aiDesc": "24/7 私人指导"
+    },
+    "features": {
+      "title": "考级通过所需的一切",
+      "subtitle": "围绕瑞典语考试体系设计的完整学习系统",
+      "smartPlan": {
+        "title": "智能学习计划",
+        "description": "设定每日学习时间和目标等级，AI 自动生成个性化学习计划，包含间隔重复和自适应练习。"
+      },
+      "materials": {
+        "title": "上传学习资料",
+        "description": "上传 PDF 和教材，AI 自动分析内容、提取词汇和语法、根据你的资料生成练习。"
+      },
+      "flashcards": {
+        "title": "智能闪卡",
+        "description": "基于 SM-2 算法的间隔重复闪卡，从你的教材自动生成，帮你牢记所学内容。"
+      },
+      "writing": {
+        "title": "AI 写作教练",
+        "description": "练习写作并获得即时反馈，按真实考试标准评分。逐步提高你的写作能力。"
+      },
+      "telegram": {
+        "title": "Telegram 随时学",
+        "description": "在 Telegram 上和 AI 导师聊天练习瑞典语。随时随地练习词汇、语法和对话。"
+      },
+      "progress": {
+        "title": "追踪学习进度",
+        "description": "可视化面板展示你在词汇、语法、阅读和写作方面的掌握程度。清楚知道自己的水平。"
+      }
+    },
+    "levels": {
+      "title": "你的瑞典语进阶之路",
+      "subtitle": "从入门到高级的系统化学习路径"
+    },
+    "ctaSection": {
+      "title": "准备好开始你的瑞典语之旅了吗？",
+      "subtitle": "立即加入，几分钟内获得你的 AI 个性化学习计划。完全免费。",
+      "cta": "创建免费账户"
+    }
+  },
+  "auth": {
+    "loginTitle": "欢迎回来",
+    "loginSubtitle": "登录继续你的瑞典语学习之旅",
+    "signupTitle": "开始你的学习之旅",
+    "signupSubtitle": "创建免费账户，开始学习瑞典语",
+    "email": "邮箱",
+    "password": "密码",
+    "confirmPassword": "确认密码",
+    "login": "登录",
+    "signup": "创建账户",
+    "noAccount": "还没有账户？",
+    "hasAccount": "已有账户？",
+    "forgotPassword": "忘记密码？",
+    "orContinue": "或继续通过",
+    "signingIn": "登录中...",
+    "signingUp": "创建账户中..."
+  },
+  "onboarding": {
+    "welcome": "让我们设置你的学习计划",
+    "welcomeDesc": "回答几个问题，让我们为你定制个性化的学习体验。",
+    "currentLevel": "你目前的瑞典语水平是？",
+    "targetLevel": "你想达到什么水平？",
+    "dailyTime": "你每天能学习多长时间？",
+    "minutes": "分钟/天",
+    "language": "首选界面语言",
+    "letsGo": "开始学习！",
+    "step": "步骤",
+    "of": "/",
+    "levels": {
+      "sfi_c": { "label": "SFI C", "desc": "入门 — 基础会话" },
+      "sfi_d": { "label": "SFI D", "desc": "初级 — 阅读与写作" },
+      "sas_grund": { "label": "SAS Grund", "desc": "中级 — 复杂文本" },
+      "sas_1": { "label": "SAS 1", "desc": "中高级" },
+      "sas_2": { "label": "SAS 2", "desc": "高级 — 论文与分析" },
+      "sas_3": { "label": "SAS 3", "desc": "精通 — 学术水平" }
+    },
+    "timeOptions": {
+      "15": "15 分钟 — 快速日常练习",
+      "30": "30 分钟 — 稳步进步",
+      "60": "1 小时 — 加速学习",
+      "120": "2 小时 — 强化模式"
+    }
+  },
+  "dashboard": {
+    "welcome": "欢迎回来",
+    "todayPlan": "今日学习计划",
+    "streak": "连续打卡",
+    "level": "当前水平",
+    "target": "目标",
+    "noTasks": "今天还没有任务。上传学习资料开始吧！",
+    "quickActions": "快捷操作",
+    "uploadMaterials": "上传资料",
+    "reviewFlashcards": "复习闪卡",
+    "startPractice": "开始练习",
+    "viewProgress": "查看进度"
+  },
+  "common": {
+    "loading": "加载中...",
+    "error": "出了点问题",
+    "save": "保存",
+    "cancel": "取消",
+    "back": "返回",
+    "next": "下一步",
+    "language": "语言"
+  },
+  "settings": {
+    "title": "设置",
+    "studyIntensity": "学习难度 (内容密度)",
+    "studyIntensityDesc": "决定 AI 每次为你生成多少生词和练习",
+    "dailyTime": "每日学习时长",
+    "dailyTimeDesc": "你每天打算花多少时间学习瑞典语？",
+    "targetLevel": "目标等级",
+    "targetLevelDesc": "你希望最终学到什么程度？",
+    "intensities": {
+      "low": { "label": "轻松", "desc": "3 个生词，少量简单语法" },
+      "medium": { "label": "标准", "desc": "6 个生词，标准的语法和阅读" },
+      "high": { "label": "高强度", "desc": "10+ 生词，长篇阅读与拔高语法" },
+      "extreme": { "label": "疯狂挑战", "desc": "15+ 生词扩展，极度复杂的长篇及写作" }
+    },
+    "saveChanges": "保存更改",
+    "savedSuccess": "设置已成功保存"
+  }
+}

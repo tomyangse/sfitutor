@@ -1,0 +1,152 @@
+{
+  "meta": {
+    "title": "SFI Tutor - AI Swedish Language Tutor",
+    "description": "Master Swedish from SFI to gymnasium level with your AI tutor"
+  },
+  "nav": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "materials": "Materials",
+    "flashcards": "Flashcards",
+    "practice": "Practice",
+    "settings": "Settings",
+    "login": "Log in",
+    "signup": "Get Started",
+    "logout": "Log out"
+  },
+  "landing": {
+    "badge": "AI-Powered Swedish Learning",
+    "title": "Master Swedish",
+    "titleHighlight": "with AI",
+    "subtitle": "From SFI C/D to gymnasium level — your personal AI tutor plans, teaches, and adapts to your pace. Upload your study materials and let AI guide your journey.",
+    "cta": "Start Learning Free",
+    "ctaSecondary": "See How It Works",
+    "stats": {
+      "levels": "6 Levels",
+      "levelsDesc": "SFI C to SAS 3",
+      "skills": "4 Skills",
+      "skillsDesc": "Read, Write, Listen, Speak",
+      "ai": "AI Tutor",
+      "aiDesc": "24/7 Personal Guide"
+    },
+    "features": {
+      "title": "Everything You Need to Pass",
+      "subtitle": "A complete learning system designed around the Swedish exam structure",
+      "smartPlan": {
+        "title": "Smart Study Plans",
+        "description": "Set your daily study time and target level. AI creates a personalized plan with spaced repetition and adaptive exercises."
+      },
+      "materials": {
+        "title": "Upload Your Materials",
+        "description": "Upload PDFs and textbooks. AI analyzes content, extracts vocabulary and grammar, and creates exercises from your own study materials."
+      },
+      "flashcards": {
+        "title": "Intelligent Flashcards",
+        "description": "Auto-generated flashcards with spaced repetition powered by the SM-2 algorithm. Never forget what you've learned."
+      },
+      "writing": {
+        "title": "AI Writing Coach",
+        "description": "Practice writing and get instant feedback graded against real exam criteria. Improve your skriftlig produktion step by step."
+      },
+      "telegram": {
+        "title": "Learn via Telegram",
+        "description": "Chat with your AI tutor on Telegram like a friend. Practice vocabulary, grammar, and conversations anytime, anywhere."
+      },
+      "progress": {
+        "title": "Track Your Progress",
+        "description": "Visual dashboards showing your mastery across vocabulary, grammar, reading, and writing. Know exactly where you stand."
+      }
+    },
+    "levels": {
+      "title": "Your Path to Fluency",
+      "subtitle": "A structured journey from beginner to advanced"
+    },
+    "ctaSection": {
+      "title": "Ready to Start Your Swedish Journey?",
+      "subtitle": "Join now and get your personalized AI study plan in minutes. Completely free.",
+      "cta": "Create Free Account"
+    }
+  },
+  "auth": {
+    "loginTitle": "Welcome Back",
+    "loginSubtitle": "Log in to continue your Swedish journey",
+    "signupTitle": "Start Your Journey",
+    "signupSubtitle": "Create a free account and begin learning Swedish",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "login": "Log in",
+    "signup": "Create Account",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "forgotPassword": "Forgot password?",
+    "orContinue": "or continue with",
+    "signingIn": "Logging in...",
+    "signingUp": "Creating account..."
+  },
+  "onboarding": {
+    "welcome": "Let's Set Up Your Study Plan",
+    "welcomeDesc": "Answer a few questions so we can personalize your learning experience.",
+    "currentLevel": "What's your current Swedish level?",
+    "targetLevel": "What level do you want to reach?",
+    "dailyTime": "How much time can you study per day?",
+    "minutes": "minutes per day",
+    "language": "Preferred interface language",
+    "letsGo": "Start Learning!",
+    "step": "Step",
+    "of": "of",
+    "levels": {
+      "sfi_c": { "label": "SFI C", "desc": "Beginner — basic conversations" },
+      "sfi_d": { "label": "SFI D", "desc": "Elementary — reading & writing" },
+      "sas_grund": { "label": "SAS Grund", "desc": "Intermediate — complex texts" },
+      "sas_1": { "label": "SAS 1", "desc": "Upper intermediate" },
+      "sas_2": { "label": "SAS 2", "desc": "Advanced — essays & analysis" },
+      "sas_3": { "label": "SAS 3", "desc": "Proficient — academic level" }
+    },
+    "timeOptions": {
+      "15": "15 min — Quick daily practice",
+      "30": "30 min — Steady progress",
+      "60": "1 hour — Accelerated learning",
+      "120": "2 hours — Intensive mode"
+    }
+  },
+  "dashboard": {
+    "welcome": "Welcome back",
+    "todayPlan": "Today's Study Plan",
+    "streak": "Day Streak",
+    "level": "Current Level",
+    "target": "Target",
+    "noTasks": "No tasks for today yet. Upload materials to get started!",
+    "quickActions": "Quick Actions",
+    "uploadMaterials": "Upload Materials",
+    "reviewFlashcards": "Review Flashcards",
+    "startPractice": "Start Practice",
+    "viewProgress": "View Progress"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "save": "Save",
+    "cancel": "Cancel",
+    "back": "Back",
+    "next": "Next",
+    "language": "Language"
+  },
+  "settings": {
+    "title": "Settings",
+    "studyIntensity": "Study Intensity",
+    "studyIntensityDesc": "How dense should your daily lessons be?",
+    "dailyTime": "Daily Study Time",
+    "dailyTimeDesc": "How long do you want to study each day?",
+    "targetLevel": "Target Level",
+    "targetLevelDesc": "What is your ultimate goal?",
+    "intensities": {
+      "low": { "label": "Relaxed", "desc": "3 vocab words, minimal grammar" },
+      "medium": { "label": "Standard", "desc": "6 vocab words, standard grammar" },
+      "high": { "label": "High Intensity", "desc": "10 vocab words, longer reading" },
+      "extreme": { "label": "Extreme Challenge", "desc": "15+ words, advanced grammar & writing" }
+    },
+    "saveChanges": "Save Changes",
+    "savedSuccess": "Settings saved successfully"
+  }
+}
