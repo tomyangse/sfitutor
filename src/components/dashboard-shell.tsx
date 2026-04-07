@@ -6,6 +6,7 @@ import { BookOpen, LayoutDashboard, Upload, Brain, PenTool, BarChart3, Settings,
 import { createClient } from '@/lib/supabase/client'
 import { useRouter } from 'next/navigation'
 import type { Locale } from '@/app/[lang]/dictionaries'
+import { Chatbot } from './chatbot'
 
 interface Props {
   dict: Record<string, any>
@@ -76,6 +77,8 @@ export function DashboardShell({ dict, lang, profile, children }: Props) {
       <div className="dash-main">
         {children}
       </div>
+      
+      <Chatbot lang={lang} dict={dict} />
 
       <style jsx>{`
         .dash-layout {
