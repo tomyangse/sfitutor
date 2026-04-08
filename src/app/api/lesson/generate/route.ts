@@ -45,6 +45,7 @@ export async function POST(request: Request) {
             unitTitle: '',
             estimatedMinutes: profile.daily_minutes || 30,
             tasks: existingTasks.map((t: any) => ({
+              id: t.id,
               type: t.task_type,
               title: t.task_type.charAt(0).toUpperCase() + t.task_type.slice(1),
               durationMinutes: t.duration_minutes,
