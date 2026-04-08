@@ -696,7 +696,7 @@ function ReviewTask({ task, lang, onComplete }: { task: any, lang: Locale, onCom
     fetch('/api/flashcards/review', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ front: card.front, quality })
+      body: JSON.stringify({ id: card.id, front: card.front, quality })
     }).catch(err => console.error('SM-2 review failed:', err))
 
     if (quality >= 3) setKnown(prev => prev + 1)

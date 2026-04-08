@@ -17,7 +17,7 @@ export interface LearningProgress {
   unitProgress: UnitProgress
   weakAreas: string[]  // grammar/vocab topics needing review
   previousVocab: string[]
-  dueReviews: { front: string; back: string }[] // SRS flashed cards due for review today
+  dueReviews: { id: string; front: string; back: string }[] // SRS flashed cards due for review today
 }
 
 /**
@@ -131,7 +131,7 @@ export async function getLearningProgress(userId: string): Promise<LearningProgr
   const today = new Date().toISOString().split('T')[0]
   const { data: dueCards } = await supabase
     .from('flashcards')
-    .select('front, back')
+    .select('id, front, back')
     .eq('user_id', userId)
     .lte('next_review', today)
     .order('next_review', { ascending: true })

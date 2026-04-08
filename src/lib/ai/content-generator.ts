@@ -64,6 +64,7 @@ export interface WritingContent {
 
 export interface ReviewContent {
   flashcards: Array<{
+    id?: string
     front: string
     back: string
     type: 'vocabulary' | 'grammar'
@@ -79,7 +80,7 @@ export async function generateDailyLesson(
   dailyMinutes: number,
   locale: string,
   previousVocab: string[] = [],
-  dueReviews: { front: string; back: string }[] = [],
+  dueReviews: { id: string; front: string; back: string }[] = [],
   intensity: string = 'medium'
 ): Promise<DailyLesson> {
   const motherTongue = locale === 'zh' ? 'Chinese' : 'English'
@@ -123,11 +124,23 @@ RULES:
   let remainingMinutes = dailyMinutes
 
   // 1. Force review task if dueReviews exist
+  let reviewTask: DailyTask | null = null;
   if (dueReviews.length > 0 && remainingMinutes >= 5) {
-    tasks.push(`Review task (5 minutes): Create 5 flashcards to review EXACTLY these old words: ${dueVocabList}.`)
-    remainingMinutes -= 5
-    // remove from focusAreas so we don't accidentally do it twice
-    focusAreas = focusAreas.filter(f => f !== 'review')
+    reviewTask = {
+      type: 'review',
+      title: locale === 'zh' ? '智能复习' : 'Smart Review',
+      durationMinutes: 5,
+      content: {
+        flashcards: dueReviews.slice(0, 10).map(r => ({
+          id: r.id,
+          front: r.front,
+          back: r.back,
+          type: 'vocabulary' as const
+        }))
+      }
+    };
+    remainingMinutes -= 5;
+    focusAreas = focusAreas.filter(f => f !== 'review');
   }
 
   // Distribute remaining minutes across remaining focus areas
@@ -197,10 +210,17 @@ For reading content: { "title": "...", "text": "...", "level": "...", "questions
 For writing content: { "prompt": "...", "instructions": "...", "wordCountTarget": ${unit.wordCountTarget}, "exampleStructure": "...", "evaluationCriteria": ["..."] }
 For review content: { "flashcards": [{ "front": "...", "back": "...", "type": "vocabulary|grammar" }] }`
 
-  return generateJSON<DailyLesson>({
+  const lesson = await generateJSON<DailyLesson>({
     systemPrompt,
     userPrompt,
     temperature: 0.7,
     maxTokens: 10000,
   })
+
+  // Prepend the manually created reliable review task instead of trusting AI
+  if (reviewTask) {
+    lesson.tasks.unshift(reviewTask)
+  }
+
+  return lesson
 }
