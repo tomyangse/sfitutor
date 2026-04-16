@@ -59,36 +59,53 @@ export async function POST(request: Request) {
 
     // ============================================
     // SMART LESSON GENERATION
-    // Analyze progress → pick right unit → vary focus
+    // Analyze progress → pick right unit → do subtraction
     // ============================================
 
     // 1. Get learning progress (analyzes all past daily_tasks)
     const progress = await getLearningProgress(user.id)
-
-    // 2. Determine today's focus based on:
-    //    - Day of week (variety)
-    //    - Unit progress (new grammar or more vocab?)
-    //    - Weak areas (need review?)
-    const dayOfWeek = new Date().getDay()
+    const u = progress.unitProgress
 
     let focusAreas: ('vocabulary' | 'grammar' | 'reading' | 'writing' | 'review')[] = []
     
-    // We get how many lessons they've done in this unit
-    const lessonsInUnit = progress.unitProgress.totalLessons
-
+    // Determine today's focus directly from the missing targets
     // Always include review if we have due SRS cards or weak areas
-    if (progress.dueReviews.length > 0 || progress.weakAreas.length > 0 || lessonsInUnit > 0) {
+    if (progress.dueReviews.length > 0 || progress.weakAreas.length > 0) {
       focusAreas.push('review')
     }
     
-    // Always include vocabulary and grammar from Day 1 to avoid giving the impression that the app "only has vocabulary"
-    focusAreas.push('vocabulary', 'grammar')
+    // If vocab goal is not met, add vocabulary
+    if (u.vocabLearned.length < u.vocabTarget) {
+      focusAreas.push('vocabulary')
+    }
     
-    // Day 2 (lesson 1) introduces reading
-    if (lessonsInUnit >= 1 || profile.daily_minutes >= 30) focusAreas.push('reading')
+    // Add grammar if there are uncovered grammar points
+    if (u.uncoveredGrammar.length > 0) {
+      focusAreas.push('grammar')
+    }
     
-    // Day 3 (lesson 2) introduces writing
-    if (lessonsInUnit >= 2 || profile.daily_minutes >= 60) focusAreas.push('writing')
+    // Add reading or writing depending on remaining targets and available time
+    if (u.uncoveredReading.length > 0 && profile.daily_minutes >= 30) {
+      focusAreas.push('reading')
+    }
+    
+    if (u.uncoveredWriting.length > 0 && profile.daily_minutes >= 60) {
+      focusAreas.push('writing')
+    }
+    
+    // If we only have reading/writing/comm left but time is low, force include one to allow progression
+    if (focusAreas.length === 0 || (focusAreas.length === 1 && focusAreas[0] === 'review')) {
+      if (u.uncoveredReading.length > 0) focusAreas.push('reading')
+      else if (u.uncoveredWriting.length > 0) focusAreas.push('writing')
+      else if (u.uncoveredCommunication.length > 0) focusAreas.push('writing') // Map comm to writing for now
+    }
+
+    // Determine the exact syllabus targets we want the AI to eliminate today
+    const explicitTargets = {
+      grammar: u.uncoveredGrammar[0],
+      reading: u.uncoveredReading[0],
+      writing: u.uncoveredWriting[0] || u.uncoveredCommunication[0] // fallback communication to writing goal
+    }
 
     // 3. Generate the daily lesson using AI
     const lesson = await generateDailyLesson(
@@ -98,8 +115,21 @@ export async function POST(request: Request) {
       profile.locale || 'en',
       progress.previousVocab,
       progress.dueReviews,
-      profile.study_intensity || 'medium'
+      profile.study_intensity || 'medium',
+      explicitTargets
     )
+
+    // Append the exact targets to the generated lesson tasks before saving
+    // so the progress-tracker will correctly see them as covered.
+    for (const task of lesson.tasks) {
+      if (task.type === 'grammar' && explicitTargets.grammar) {
+        (task.content as any).targetCovered = explicitTargets.grammar
+      } else if (task.type === 'reading' && explicitTargets.reading) {
+        (task.content as any).targetCovered = explicitTargets.reading
+      } else if (task.type === 'writing' && explicitTargets.writing) {
+        (task.content as any).targetCovered = explicitTargets.writing
+      }
+    }
 
     // 4. Save to database for tracking
     // First ensure we have a plan_id (or create a simple one)

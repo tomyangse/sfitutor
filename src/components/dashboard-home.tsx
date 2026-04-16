@@ -7,14 +7,17 @@ import {
 } from 'lucide-react'
 import Link from 'next/link'
 import type { Locale } from '@/app/[lang]/dictionaries'
+import { MonthlyCalendar } from './monthly-calendar'
 
 interface Props {
   dict: Record<string, any>
   lang: Locale
   profile: any
+  progressData?: { completed: number; total: number } | null
+  studyDays?: string[]
 }
 
-export function DashboardHome({ dict, lang, profile }: Props) {
+export function DashboardHome({ dict, lang, profile, progressData, studyDays = [] }: Props) {
   const t = dict.dashboard
   const [generating, setGenerating] = useState(false)
   const [lesson, setLesson] = useState<any>(null)
@@ -77,8 +80,30 @@ export function DashboardHome({ dict, lang, profile }: Props) {
     <div className="dash-home">
       {/* Welcome header */}
       <div className="dash-welcome">
-        <h1>{t.welcome} 👋</h1>
-        <p>{dailyMinutes} min/day • {levelLabel} → {targetLabel}</p>
+        <div className="welcome-text">
+          <h1>{t.welcome} 👋</h1>
+          <p>{dailyMinutes} min/day</p>
+        </div>
+        
+        {progressData ? (
+          <div className="header-progress">
+            <div className="progress-labels">
+              <span className="level-start">{levelLabel}</span>
+              <span className="level-count">{progressData.completed} / {progressData.total} {lang === 'zh' ? '单元' : 'units'}</span>
+              <span className="level-end">{targetLabel}</span>
+            </div>
+            <div className="header-progress-track">
+              <div 
+                className="header-progress-fill" 
+                style={{ width: `${Math.max(2, (progressData.completed / Math.max(1, progressData.total)) * 100)}%` }} 
+              />
+            </div>
+          </div>
+        ) : (
+          <div className="header-progress-fallback">
+            {levelLabel} → {targetLabel}
+          </div>
+        )}
       </div>
 
       {/* Stats cards */}
@@ -112,10 +137,12 @@ export function DashboardHome({ dict, lang, profile }: Props) {
         </div>
       </div>
 
-      {/* Today's plan */}
-      <div className="dash-section">
-        <div className="dash-section-header">
-          <h2 className="dash-section-title">{t.todayPlan}</h2>
+      <div className="dash-grid">
+        <div className="main-col">
+          {/* Today's plan */}
+          <div className="dash-section">
+            <div className="dash-section-header">
+              <h2 className="dash-section-title">{t.todayPlan}</h2>
           {!lesson && !generating && (
             <button className="btn btn-primary" onClick={() => generateLesson(false)}>
               <Sparkles size={16} />
@@ -241,6 +268,12 @@ export function DashboardHome({ dict, lang, profile }: Props) {
             <p>{t.noTasks}</p>
           </div>
         )}
+          </div>
+        </div>
+        
+        <div className="side-col">
+          <MonthlyCalendar studyDays={studyDays} lang={lang} />
+        </div>
       </div>
 
       {/* Quick actions */}
@@ -260,14 +293,24 @@ export function DashboardHome({ dict, lang, profile }: Props) {
 
       <style jsx>{`
         .dash-home { max-width: 900px; }
-        .dash-welcome { margin-bottom: 2rem; }
-        .dash-welcome h1 { font-size: 1.75rem; font-weight: 800; letter-spacing: -0.02em; }
-        .dash-welcome p { color: var(--muted-foreground); margin-top: 0.25rem; font-size: 0.9375rem; }
+        .dash-welcome { margin-bottom: 2rem; display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
+        .welcome-text h1 { font-size: 1.75rem; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 0.25rem; }
+        .welcome-text p { color: var(--muted-foreground); font-size: 0.9375rem; margin: 0; }
+        .header-progress { width: 100%; max-width: 320px; }
+        .progress-labels { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; font-size: 0.8125rem; font-weight: 700; }
+        .level-start { color: var(--color-primary-600); }
+        .level-end { color: var(--color-primary-600); }
+        .level-count { color: var(--muted-foreground); font-weight: 500; }
+        .header-progress-track { height: 8px; background: var(--border); border-radius: 999px; overflow: hidden; }
+        .header-progress-fill { height: 100%; background: linear-gradient(90deg, var(--color-primary-500), #8b5cf6); border-radius: 999px; transition: width 0.8s ease-out; }
+        .header-progress-fallback { font-size: 0.875rem; color: var(--muted-foreground); font-weight: 500; }
         .dash-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
         .stat-card { display: flex; align-items: center; gap: 1rem; padding: 1.25rem; background: var(--card); border: 1px solid var(--border); border-radius: var(--radius-xl); }
         .stat-icon { width: 48px; height: 48px; display: flex; align-items: center; justify-content: center; border-radius: var(--radius-lg); }
         .stat-value { font-size: 1.25rem; font-weight: 800; }
         .stat-label { font-size: 0.8125rem; color: var(--muted-foreground); }
+        .dash-grid { display: grid; gap: 2rem; grid-template-columns: 1fr 300px; align-items: start; }
+        .main-col { display: flex; flex-direction: column; gap: 2rem; }
         .dash-section { margin-bottom: 2rem; }
         .dash-section-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
         .dash-section-title { font-size: 1.125rem; font-weight: 700; }
@@ -358,6 +401,7 @@ export function DashboardHome({ dict, lang, profile }: Props) {
 
         @media (max-width: 768px) {
           .dash-stats { grid-template-columns: 1fr; }
+          .dash-grid { grid-template-columns: 1fr; }
           .quick-actions-grid { grid-template-columns: repeat(2, 1fr); }
           .dash-section-header { flex-direction: column; gap: 0.75rem; align-items: flex-start; }
         }

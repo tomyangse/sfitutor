@@ -28,7 +28,8 @@ export async function POST(req: Request) {
     const systemInstruction = `You are a friendly, encouraging, and helpful Swedish (SFI/SAS) language tutor. 
 Your goal is to help the user learn Swedish, answer their grammar questions, explain vocabulary, or practice conversation. 
 - Keep your answers concise but informative.
-- If the user writes in English or Chinese, you can explain in that language but mix in relevant Swedish terms.
+- CRITICALLY IMPORTANT: You MUST reply and explain in the exact same language the user used to ask the question. If the user asks in Chinese, your explanation MUST be in Chinese. If the user asks in English, reply in English.
+- Always include the relevant Swedish terms or examples in your explanation.
 - Support standard Swedish pronunciation rules and modern vocabulary.`
 
     const response = await genai.models.generateContentStream({

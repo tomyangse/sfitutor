@@ -81,7 +81,8 @@ export async function generateDailyLesson(
   locale: string,
   previousVocab: string[] = [],
   dueReviews: { id: string; front: string; back: string }[] = [],
-  intensity: string = 'medium'
+  intensity: string = 'medium',
+  explicitTargets?: { grammar?: string, reading?: string, writing?: string }
 ): Promise<DailyLesson> {
   const motherTongue = locale === 'zh' ? 'Chinese' : 'English'
 
@@ -108,8 +109,8 @@ INTENSITY LEVEL: ${intensity.toUpperCase()}. Generate content density accordingl
 CONTEXT:
 - Grammar points for this unit: ${unit.grammar.join(', ')}
 - Vocabulary themes: ${unit.vocabulary.join(', ')}
-- Reading skills: ${unit.reading.join(', ')}
-- Writing skills: ${unit.writing.join(', ')}
+- Reading skills: ${unit.reading?.join(', ') || ''}
+- Writing skills: ${unit.writing?.join(', ') || ''}
 
 RULES:
 - Generate EXACTLY ${dailyMinutes} minutes of content
@@ -159,22 +160,24 @@ RULES:
 
     if (focusAreas.includes('grammar') && remainingMinutes > 0) {
       const mins = Math.min(timePerArea, remainingMinutes)
-      const grammarPoint = unit.grammar[Math.floor(Math.random() * unit.grammar.length)]
-      tasks.push(`Grammar task (${mins} minutes): Teach "${grammarPoint}". Include brief explanation, 1-2 examples, and ${grammarScale + (mins > 5 ? 1 : 0)} exercises.`)
+      const grammarPoint = explicitTargets?.grammar || unit.grammar[Math.floor(Math.random() * unit.grammar.length)]
+      tasks.push(`Grammar task (${mins} minutes): Teach EXACTLY this topic: "${grammarPoint}". Include brief explanation, 1-2 examples, and ${grammarScale + (mins > 5 ? 1 : 0)} exercises.`)
       remainingMinutes -= mins
     }
 
     if (focusAreas.includes('reading') && remainingMinutes > 0) {
       const mins = Math.min(timePerArea, remainingMinutes)
       const rScale = mins > 5 ? readingScale : Math.floor(readingScale / 2)
-      tasks.push(`Reading task (${mins} minutes): Generate a short Swedish text (approx ${rScale} words). Include 1-2 comprehension questions.`)
+      const rTopic = explicitTargets?.reading || (unit.reading ? unit.reading[0] : 'general text')
+      tasks.push(`Reading task (${mins} minutes): Generate a short Swedish text (approx ${rScale} words) focusing on this skill/topic: "${rTopic}". Include 1-2 comprehension questions.`)
       remainingMinutes -= mins
     }
 
     if (focusAreas.includes('writing') && remainingMinutes > 0) {
       const mins = remainingMinutes // give all leftover to writing
       const wScale = intensity === 'extreme' ? unit.wordCountTarget * 2 : unit.wordCountTarget
-      tasks.push(`Writing task (${mins} minutes): Create a writing prompt based on "${unit.writing[0]}". Target word count: ${wScale} words.`)
+      const wTopic = explicitTargets?.writing || (unit.writing ? unit.writing[0] : 'general text')
+      tasks.push(`Writing task (${mins} minutes): Create a writing prompt precisely exercising this skill: "${wTopic}". Target word count: ${wScale} words.`)
       remainingMinutes = 0
     }
 

@@ -422,7 +422,7 @@ function GrammarTask({ task, lang, onComplete }: { task: any, lang: Locale, onCo
       <h2 className="task-title">📐 {lang === 'zh' ? '语法练习' : 'Grammar Exercise'} ({exIdx + 1}/{exercises.length})</h2>
       <div className="exercise-question">{ex.question}</div>
 
-      {ex.options ? (
+      {ex.options && ex.options.length > 0 ? (
         <div className="exercise-options">
           {ex.options.map((opt: string, i: number) => {
             let cls = 'exercise-option'
